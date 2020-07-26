@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,15 @@
 		3E98028024CC774600DA532D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E98027E24CC774600DA532D /* Main.storyboard */; };
 		3E98028224CC774700DA532D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E98028124CC774700DA532D /* Assets.xcassets */; };
 		3E98028524CC774700DA532D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E98028324CC774700DA532D /* LaunchScreen.storyboard */; };
+		3E98028E24CC786A00DA532D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E98028D24CC786A00DA532D /* WebKit.framework */; };
+		3EA0634824CC818800752615 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA0634724CC818800752615 /* SwiftSoup */; };
+		3EA0634A24CD30AE00752615 /* JsonDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634924CD30AD00752615 /* JsonDataType.swift */; };
+		3EA0634C24CD385F00752615 /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634B24CD385F00752615 /* JsonController.swift */; };
+		3EA0634E24CE13DB00752615 /* JsonSchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634D24CE13DB00752615 /* JsonSchool.swift */; };
+		3EA0635024CE148300752615 /* JsonDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634F24CE148300752615 /* JsonDepartment.swift */; };
+		3EA0635324CE168800752615 /* JsonSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635224CE168800752615 /* JsonSemester.swift */; };
+		3EA0635524CE174600752615 /* JsonProfessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635424CE174600752615 /* JsonProfessor.swift */; };
+		3EA0635724CE1D5D00752615 /* JsonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635624CE1D5D00752615 /* JsonSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +33,14 @@
 		3E98028124CC774700DA532D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E98028424CC774700DA532D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E98028624CC774700DA532D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E98028D24CC786A00DA532D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		3EA0634924CD30AD00752615 /* JsonDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDataType.swift; sourceTree = "<group>"; };
+		3EA0634B24CD385F00752615 /* JsonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
+		3EA0634D24CE13DB00752615 /* JsonSchool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSchool.swift; sourceTree = "<group>"; };
+		3EA0634F24CE148300752615 /* JsonDepartment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDepartment.swift; sourceTree = "<group>"; };
+		3EA0635224CE168800752615 /* JsonSemester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSemester.swift; sourceTree = "<group>"; };
+		3EA0635424CE174600752615 /* JsonProfessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonProfessor.swift; sourceTree = "<group>"; };
+		3EA0635624CE1D5D00752615 /* JsonSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E98028E24CC786A00DA532D /* WebKit.framework in Frameworks */,
+				3EA0634824CC818800752615 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +61,7 @@
 			children = (
 				3E98027724CC774600DA532D /* CourseListingParser */,
 				3E98027624CC774600DA532D /* Products */,
+				3E98028C24CC786A00DA532D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,12 +79,35 @@
 				3E98027824CC774600DA532D /* AppDelegate.swift */,
 				3E98027A24CC774600DA532D /* SceneDelegate.swift */,
 				3E98027C24CC774600DA532D /* ViewController.swift */,
+				3EA0634B24CD385F00752615 /* JsonController.swift */,
+				3EA0634924CD30AD00752615 /* JsonDataType.swift */,
+				3EA0635124CE167200752615 /* Data Types */,
 				3E98027E24CC774600DA532D /* Main.storyboard */,
 				3E98028124CC774700DA532D /* Assets.xcassets */,
 				3E98028324CC774700DA532D /* LaunchScreen.storyboard */,
 				3E98028624CC774700DA532D /* Info.plist */,
 			);
 			path = CourseListingParser;
+			sourceTree = "<group>";
+		};
+		3E98028C24CC786A00DA532D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E98028D24CC786A00DA532D /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3EA0635124CE167200752615 /* Data Types */ = {
+			isa = PBXGroup;
+			children = (
+				3EA0634D24CE13DB00752615 /* JsonSchool.swift */,
+				3EA0634F24CE148300752615 /* JsonDepartment.swift */,
+				3EA0635424CE174600752615 /* JsonProfessor.swift */,
+				3EA0635224CE168800752615 /* JsonSemester.swift */,
+				3EA0635624CE1D5D00752615 /* JsonSession.swift */,
+			);
+			path = "Data Types";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +126,9 @@
 			dependencies = (
 			);
 			name = CourseListingParser;
+			packageProductDependencies = (
+				3EA0634724CC818800752615 /* SwiftSoup */,
+			);
 			productName = CourseListingParser;
 			productReference = 3E98027524CC774600DA532D /* CourseListingParser.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +157,9 @@
 				Base,
 			);
 			mainGroup = 3E98026C24CC774600DA532D;
+			packageReferences = (
+				3EA0634624CC818800752615 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = 3E98027624CC774600DA532D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +187,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA0635724CE1D5D00752615 /* JsonSession.swift in Sources */,
 				3E98027D24CC774600DA532D /* ViewController.swift in Sources */,
+				3EA0635524CE174600752615 /* JsonProfessor.swift in Sources */,
+				3EA0634C24CD385F00752615 /* JsonController.swift in Sources */,
+				3EA0634A24CD30AE00752615 /* JsonDataType.swift in Sources */,
 				3E98027924CC774600DA532D /* AppDelegate.swift in Sources */,
+				3EA0635024CE148300752615 /* JsonDepartment.swift in Sources */,
 				3E98027B24CC774600DA532D /* SceneDelegate.swift in Sources */,
+				3EA0634E24CE13DB00752615 /* JsonSchool.swift in Sources */,
+				3EA0635324CE168800752615 /* JsonSemester.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +394,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3EA0634624CC818800752615 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3EA0634724CC818800752615 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EA0634624CC818800752615 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3E98026D24CC774600DA532D /* Project object */;
 }
