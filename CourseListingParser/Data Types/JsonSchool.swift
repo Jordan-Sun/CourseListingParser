@@ -28,4 +28,24 @@ class JSONSchool: Codable, Hashable {
         hasher.combine(fullName)
     }
     
+    private enum CodingKeys: String, CodingKey {
+        case fullName
+        case shortName
+        case departments
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        fullName = try container.decode(String.self, forKey: .fullName)
+        shortName = try? container.decode(String.self, forKey: .shortName)
+        departments = try container.decode([JSONDepartment].self, forKey: .departments)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(fullName, forKey: .fullName)
+        try? container.encode(shortName, forKey: .shortName)
+        try container.encode(departments, forKey: .departments)
+    }
+    
 }

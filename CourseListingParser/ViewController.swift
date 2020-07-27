@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var jsonDepartments = [JSONDepartment]()
     var jsonSessions = [JSONSession]()
     var jsonCourses = [JSONCourse]()
+    let jsonController = JsonController()
     
     fileprivate func loadWebView() {
         // Do any additional setup after loading the view.
@@ -74,33 +75,46 @@ extension ViewController: WKNavigationDelegate {
             return
         }
         
-        // Scrap department info
+// Scrap department info
+        
         guard let deptBars: Elements = try? bodyDivResults.select("table#tabDeptBar0") else {
             print("Tab dept bar element not found in document.")
             return
         }
+        
         for deptBar in deptBars {
+            
             if let redLink: Element = try? deptBar.select("a.RedLink").first() {
+                
                 let deptName = try? redLink.text()
+                
                 if let splits = deptName?.split(separator: "(") {
+                    
                     let deptFullName = String(splits[0])
                     let deptCode = String(splits[1].split(separator: ")")[0])
                     jsonDepartments.append(JSONDepartment(fullName: deptFullName, code: deptCode, school: unknownSchool))
                     print(jsonDepartments)
+                    
                 } else {
                     print("Failed to decode department info.")
                 }
+                
             } else {
                 print("Department red link element not found in tab dept bar: \(deptBar)")
             }
+            
         }
         
-        // Scrap course info
+// Scrap course info
+        
         guard let courseDivs: Elements = try? bodyDivResults.select("div.DivDetail") else {
             print("Body div detail element not found in document.")
             return
         }
+        
         for courseDiv in courseDivs {
+            
+            // Get basic course info from the id of course div
             let courseDivId = courseDiv.id()
             let sessionIndex = courseDivId.index(courseDivId.startIndex, offsetBy: 8)
             let departmentIndex = courseDivId.index(courseDivId.startIndex, offsetBy: 14)
@@ -108,28 +122,41 @@ extension ViewController: WKNavigationDelegate {
             let sessionName = String(courseDivId[sessionIndex ..< departmentIndex])
             let departmentCode = String(courseDivId[departmentIndex ..< courseIndex])
             let courseCode = String(courseDivId[courseIndex...])
-            print("Session: \(sessionName), Department: \(departmentCode), Course: \(courseCode)")
+            
+            // Scrap more course infos from trs
             if let courseTrs: Elements = try? courseDiv.select("tr") {
+                
+                var description = ""
+                var attributes = ""
+                
                 for courseTr in courseTrs {
+                    
                     if let courseTrText = try? courseTr.text() {
+                        
                         let splits = courseTrText.split(separator: ":")
-                        var description = ""
-                        var attributes = ""
                         switch splits[0] {
                         case "Description":
                             description = String(splits[1])
                         default:
                             break
                         }
-//                        jsonCourses.append(JSONCourse(id: <#T##String#>, name: <#T##String#>, desc: description, department: <#T##JSONDepartment#>, professor: <#T##JSONProfessor#>, session: <#T##JSONSession#>))
+                        
                     } else {
                         print("Unable to get course tr text from course tr: \(courseTr)")
                     }
+                    
                 }
+                
+                let departmentIndex = findDeptIndexByCode(code: departmentCode)
+                jsonCourses.append(JSONCourse(id: courseCode, name: "Unknown Course", desc: description, department: jsonDepartments[departmentIndex], professor: nil, session: nil))
+                
             } else {
                 print("Descriptions not found in course div: \(courseDiv)")
             }
+            
         }
+        
+        jsonController.writeEncodableToDocuments(jsonDepartments)
         
     }
     

@@ -15,7 +15,6 @@
 		3E98028524CC774700DA532D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E98028324CC774700DA532D /* LaunchScreen.storyboard */; };
 		3E98028E24CC786A00DA532D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E98028D24CC786A00DA532D /* WebKit.framework */; };
 		3EA0634824CC818800752615 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA0634724CC818800752615 /* SwiftSoup */; };
-		3EA0634A24CD30AE00752615 /* JsonDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634924CD30AD00752615 /* JsonDataType.swift */; };
 		3EA0634C24CD385F00752615 /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634B24CD385F00752615 /* JsonController.swift */; };
 		3EA0634E24CE13DB00752615 /* JsonSchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634D24CE13DB00752615 /* JsonSchool.swift */; };
 		3EA0635024CE148300752615 /* JsonDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0634F24CE148300752615 /* JsonDepartment.swift */; };
@@ -36,7 +35,6 @@
 		3E98028424CC774700DA532D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E98028624CC774700DA532D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E98028D24CC786A00DA532D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		3EA0634924CD30AD00752615 /* JsonDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDataType.swift; sourceTree = "<group>"; };
 		3EA0634B24CD385F00752615 /* JsonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
 		3EA0634D24CE13DB00752615 /* JsonSchool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSchool.swift; sourceTree = "<group>"; };
 		3EA0634F24CE148300752615 /* JsonDepartment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDepartment.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				3E98027A24CC774600DA532D /* SceneDelegate.swift */,
 				3E98027C24CC774600DA532D /* ViewController.swift */,
 				3EA0634B24CD385F00752615 /* JsonController.swift */,
-				3EA0634924CD30AD00752615 /* JsonDataType.swift */,
 				3EA0635124CE167200752615 /* Data Types */,
 				3E98027E24CC774600DA532D /* Main.storyboard */,
 				3E98028124CC774700DA532D /* Assets.xcassets */,
@@ -198,7 +195,6 @@
 				3E98027D24CC774600DA532D /* ViewController.swift in Sources */,
 				3EA0635524CE174600752615 /* JsonProfessor.swift in Sources */,
 				3EA0634C24CD385F00752615 /* JsonController.swift in Sources */,
-				3EA0634A24CD30AE00752615 /* JsonDataType.swift in Sources */,
 				3E98027924CC774600DA532D /* AppDelegate.swift in Sources */,
 				3EA0635B24CE4CB500752615 /* JsonSection.swift in Sources */,
 				3EA0635024CE148300752615 /* JsonDepartment.swift in Sources */,

@@ -39,4 +39,32 @@ class JSONSection: Codable, Hashable {
         hasher.combine(uuid)
     }
     
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case description
+        case start
+        case end
+        case days
+        case course
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        desc = try? container.decode(String.self, forKey: .description)
+        start = try container.decode(Date.self, forKey: .start)
+        end = try container.decode(Date.self, forKey: .end)
+        days = try container.decode(String.self, forKey: .days)
+        course = try container.decode(JSONCourse.self, forKey: .course)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try? container.encode(desc, forKey: .description)
+        try container.encode(start, forKey: .start)
+        try container.encode(end, forKey: .end)
+        try container.encode(days, forKey: .days)
+    }
+    
 }
