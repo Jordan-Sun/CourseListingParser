@@ -15,6 +15,7 @@ class JSONSession: Codable, Hashable {
     var end: Date
     
     var semester: JSONSemester? = nil
+    var courses = [JSONCourse]()
     
     init(name: String, start: Date, end: Date) {
         self.name = name

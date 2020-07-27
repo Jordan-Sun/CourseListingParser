@@ -22,6 +22,8 @@
 		3EA0635324CE168800752615 /* JsonSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635224CE168800752615 /* JsonSemester.swift */; };
 		3EA0635524CE174600752615 /* JsonProfessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635424CE174600752615 /* JsonProfessor.swift */; };
 		3EA0635724CE1D5D00752615 /* JsonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635624CE1D5D00752615 /* JsonSession.swift */; };
+		3EA0635924CE4CA600752615 /* JsonCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635824CE4CA600752615 /* JsonCourse.swift */; };
+		3EA0635B24CE4CB500752615 /* JsonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635A24CE4CB500752615 /* JsonSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		3EA0635224CE168800752615 /* JsonSemester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSemester.swift; sourceTree = "<group>"; };
 		3EA0635424CE174600752615 /* JsonProfessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonProfessor.swift; sourceTree = "<group>"; };
 		3EA0635624CE1D5D00752615 /* JsonSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSession.swift; sourceTree = "<group>"; };
+		3EA0635824CE4CA600752615 /* JsonCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCourse.swift; sourceTree = "<group>"; };
+		3EA0635A24CE4CB500752615 /* JsonSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				3EA0635424CE174600752615 /* JsonProfessor.swift */,
 				3EA0635224CE168800752615 /* JsonSemester.swift */,
 				3EA0635624CE1D5D00752615 /* JsonSession.swift */,
+				3EA0635824CE4CA600752615 /* JsonCourse.swift */,
+				3EA0635A24CE4CB500752615 /* JsonSection.swift */,
 			);
 			path = "Data Types";
 			sourceTree = "<group>";
@@ -188,11 +194,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EA0635724CE1D5D00752615 /* JsonSession.swift in Sources */,
+				3EA0635924CE4CA600752615 /* JsonCourse.swift in Sources */,
 				3E98027D24CC774600DA532D /* ViewController.swift in Sources */,
 				3EA0635524CE174600752615 /* JsonProfessor.swift in Sources */,
 				3EA0634C24CD385F00752615 /* JsonController.swift in Sources */,
 				3EA0634A24CD30AE00752615 /* JsonDataType.swift in Sources */,
 				3E98027924CC774600DA532D /* AppDelegate.swift in Sources */,
+				3EA0635B24CE4CB500752615 /* JsonSection.swift in Sources */,
 				3EA0635024CE148300752615 /* JsonDepartment.swift in Sources */,
 				3E98027B24CC774600DA532D /* SceneDelegate.swift in Sources */,
 				3EA0634E24CE13DB00752615 /* JsonSchool.swift in Sources */,

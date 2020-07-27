@@ -16,6 +16,7 @@ class JSONDepartment: Codable, Hashable {
     
     var school: JSONSchool? = nil
     var professors = [JSONProfessor]()
+    var courses = [JSONCourse]()
     
     init(fullName: String, shortName: String? = nil, code: String, school: JSONSchool? = nil) {
         self.fullName = fullName
