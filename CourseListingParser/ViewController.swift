@@ -178,10 +178,10 @@ extension ViewController: WKNavigationDelegate {
             for sectionResultRow2Div in sectionResultRow2Divs {
                 
                 // Find <a style="text-align:left; color:#0000ff;" class="lnkSubSemester" sem="*">
-                guard let sectionResultLnkSubSemester: Element = try? sectionResultRow2Div.select("a.lnkSubSemester").first() else {
-                    print("Course div result table div result row 2 div lnk sub semester a not found in document.")
-                    return
-                }
+//                guard let sectionResultLnkSubSemester: Element = try? sectionResultRow2Div.select("a.lnkSubSemester").first() else {
+//                    print("Course div result table div result row 2 div lnk sub semester a not found in document.")
+//                    return
+//                }
 //                guard let semesterName = try? sectionResultLnkSubSemester.attr("sem") else {
 //                    print("Course div result table div result row 2 div lnk sub semester a sem attribute not found in document.")
 //                    return
@@ -189,13 +189,17 @@ extension ViewController: WKNavigationDelegate {
 //                print(semesterName)
                 
                 // Find <td style="width:250px;">
-                guard let sectionResultSectionStartEndTd = try? sectionResultRow2Div.select("td[style=\"width:250px;\"]").first()?.text() else {
+                var startDayString = ""
+                var endDayString = ""
+                if let sectionResultSectionStartEndTd = try? sectionResultRow2Div.select("td[style=\"width:250px;\"]").first()?.text() {
+                    let dateSplit = sectionResultSectionStartEndTd.split(separator: " ")
+                    let startSplit = dateSplit[0].split(separator: ":")
+                    startDayString = String(startSplit[1])
+                    let endSplit = dateSplit[1].split(separator: ":")
+                    endDayString = String(endSplit[1])
+                } else {
                     print("Course div result table div result row 2 div section start and end time td not found in document.")
-                    return
                 }
-                let dateSplit = sectionResultSectionStartEndTd.split(separator: " ")
-                let startSplit = dateSplit[0].split(separator: ":")
-                let endSplit = dateSplit[1].split(separator: ":")
                 
                 // Find <td class="ItemRow">
                 var resultStrings = [String]()
@@ -220,12 +224,12 @@ extension ViewController: WKNavigationDelegate {
                 
                 // Assign section
                 let timeSplits = resultStrings[2].split(separator: "-")
-                if (startSplit.count == 2) && (endSplit.count == 2) && (timeSplits.count == 2) {
+                if (!startDayString.isEmpty) && (!endDayString.isEmpty) && (timeSplits.count == 2) {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = " MM/dd/yyyy hh:mma"
-                    let startDateString = String(startSplit[1]) + " " + String(timeSplits[0]) + "M"
+                    let startDateString = startDayString + " " + String(timeSplits[0]) + "M"
                     let startDate = dateFormatter.date(from: startDateString)!
-                    let endDateString = String(endSplit[1]) + " " + String(timeSplits[1]) + "M"
+                    let endDateString = endDayString + " " + String(timeSplits[1]) + "M"
                     let endDate = dateFormatter.date(from: endDateString)!
                     let _ = JSONSection(id: resultStrings[0], desc: desc, start: startDate, end: endDate, days: resultStrings[1], location: resultStrings[3], course: newCourse)
                 } else {
