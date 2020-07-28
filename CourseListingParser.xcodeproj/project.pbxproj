@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E3BB8AA24CFAE6B005E40E8 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3BB8A924CFAE6B005E40E8 /* CollectionViewCell.swift */; };
 		3E98027924CC774600DA532D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98027824CC774600DA532D /* AppDelegate.swift */; };
 		3E98027B24CC774600DA532D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98027A24CC774600DA532D /* SceneDelegate.swift */; };
 		3E98027D24CC774600DA532D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98027C24CC774600DA532D /* ViewController.swift */; };
@@ -23,9 +24,11 @@
 		3EA0635724CE1D5D00752615 /* JsonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635624CE1D5D00752615 /* JsonSession.swift */; };
 		3EA0635924CE4CA600752615 /* JsonCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635824CE4CA600752615 /* JsonCourse.swift */; };
 		3EA0635B24CE4CB500752615 /* JsonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0635A24CE4CB500752615 /* JsonSection.swift */; };
+		3EB89C4E24CFCB2300D40096 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB89C4D24CFCB2300D40096 /* HeaderCollectionReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E3BB8A924CFAE6B005E40E8 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		3E98027524CC774600DA532D /* CourseListingParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseListingParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E98027824CC774600DA532D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E98027A24CC774600DA532D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +46,7 @@
 		3EA0635624CE1D5D00752615 /* JsonSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSession.swift; sourceTree = "<group>"; };
 		3EA0635824CE4CA600752615 /* JsonCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCourse.swift; sourceTree = "<group>"; };
 		3EA0635A24CE4CB500752615 /* JsonSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSection.swift; sourceTree = "<group>"; };
+		3EB89C4D24CFCB2300D40096 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E3BB8A824CFAE4A005E40E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3EB89C4D24CFCB2300D40096 /* HeaderCollectionReusableView.swift */,
+				3E3BB8A924CFAE6B005E40E8 /* CollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3E98026C24CC774600DA532D = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +94,7 @@
 				3E98027824CC774600DA532D /* AppDelegate.swift */,
 				3E98027A24CC774600DA532D /* SceneDelegate.swift */,
 				3E98027C24CC774600DA532D /* ViewController.swift */,
+				3E3BB8A824CFAE4A005E40E8 /* Views */,
 				3EA0634B24CD385F00752615 /* JsonController.swift */,
 				3EA0635124CE167200752615 /* Data Types */,
 				3E98027E24CC774600DA532D /* Main.storyboard */,
@@ -192,8 +206,10 @@
 			files = (
 				3EA0635724CE1D5D00752615 /* JsonSession.swift in Sources */,
 				3EA0635924CE4CA600752615 /* JsonCourse.swift in Sources */,
+				3E3BB8AA24CFAE6B005E40E8 /* CollectionViewCell.swift in Sources */,
 				3E98027D24CC774600DA532D /* ViewController.swift in Sources */,
 				3EA0635524CE174600752615 /* JsonProfessor.swift in Sources */,
+				3EB89C4E24CFCB2300D40096 /* HeaderCollectionReusableView.swift in Sources */,
 				3EA0634C24CD385F00752615 /* JsonController.swift in Sources */,
 				3E98027924CC774600DA532D /* AppDelegate.swift in Sources */,
 				3EA0635B24CE4CB500752615 /* JsonSection.swift in Sources */,

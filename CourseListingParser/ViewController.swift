@@ -12,15 +12,27 @@ import SwiftSoup
 
 class ViewController: UIViewController {
 
+    /// Web view outlet
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var label: UILabel!
-    var finishedNavigation = false
+    
+    /// Collection view outlet
+    @IBOutlet weak var collectionView: UICollectionView!
+    /// Collection view data source
+    private var collectionViewDiffableDataSource: UICollectionViewDiffableDataSource<JSONCourse,JSONSection>!
     
     var unknownSchool = JSONSchool(fullName: "Unkown School")
     var jsonDepartments = [JSONDepartment]()
     var jsonSessions = [JSONSession]()
     var jsonCourses = [JSONCourse]()
     let jsonController = JsonController()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadWebView()
+        configureCollectionLayout()
+        configureCollectionDataSource()
+        webView.navigationDelegate = self
+    }
     
     fileprivate func loadWebView() {
         // Do any additional setup after loading the view.
@@ -30,12 +42,6 @@ class ViewController: UIViewController {
         }
         let request = URLRequest(url: url)
         webView.load(request)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadWebView()
-        webView.navigationDelegate = self
     }
     
     @IBAction func parseButton(_ sender: Any) {
@@ -49,6 +55,144 @@ class ViewController: UIViewController {
     }
     
 }
+
+// Collection View Layout
+
+extension ViewController {
+    
+    /// Configure the layout of the movie preview collection view
+    private func configureCollectionLayout() {
+        collectionView.collectionViewLayout = createLayout()
+        collectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: "courseHeader", withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier)
+    }
+    
+    /// Create a new collection view compositional layout
+    private func createLayout() -> UICollectionViewCompositionalLayout {
+        
+        let layout = UICollectionViewCompositionalLayout {
+            (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
+            
+            let groupColumns = 1
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: groupColumns)
+            
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .estimated(44)), elementKind: "courseHeader", alignment: .top)
+            header.pinToVisibleBounds = true
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [header]
+            
+            return section
+            
+        }
+        
+        return layout
+        
+    }
+    
+}
+
+// Collection View Data Source
+
+extension ViewController {
+    
+    /// Configure the datasource of the movie preview collection view
+    private func configureCollectionDataSource() {
+        
+        // Diffable data source cell provider
+        collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<JSONCourse,JSONSection>(collectionView: self.collectionView) { (collectionView, indexPath, section) -> UICollectionViewCell? in
+            
+            // Dequeue reuseable cell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.reuseIdentifier, for: indexPath) as? CollectionViewCell else {
+                fatalError("Expected reused cell to be of type CollectionViewCell.")
+            }
+            
+            // Update cell
+            cell.idLabel.text = section.id
+            cell.daysLabel.text = section.days
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US")
+            dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm a")
+            cell.timeLabel.text = "\(dateFormatter.string(from: section.start))-\(dateFormatter.string(from: section.end))"
+            cell.locationLabel.text = section.location
+            dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yyyy")
+            cell.startLabel.text = dateFormatter.string(from: section.start)
+            cell.endLabel.text = dateFormatter.string(from: section.end)
+            if (section.desc != nil) && (section.desc != "") {
+                cell.descriptionLabel.text = section.desc
+                cell.descriptionLabel.isHidden = false
+            } else {
+                cell.descriptionLabel.isHidden = true
+            }
+            cell.layer.cornerRadius = 8
+            cell.backgroundColor = .secondarySystemBackground
+            
+            return cell
+            
+        }
+        
+        // Diffable data source supplementary view provider
+        collectionViewDiffableDataSource.supplementaryViewProvider = {
+            (collectionView, kind, indexPath) -> UICollectionReusableView? in
+
+            // Check is proving a rating badge supplementary view
+            switch kind {
+            case "courseHeader":
+                return self.createHeader(collectionView: collectionView, indexPath: indexPath)
+            default:
+                return nil
+            }
+
+        }
+        
+    }
+    
+    private func createHeader(collectionView: UICollectionView, indexPath: IndexPath) -> HeaderCollectionReusableView? {
+
+        // Dequeue reuseable supplementary view
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "courseHeader", withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier, for: indexPath) as? HeaderCollectionReusableView else {
+            fatalError("Expected reused badge to be of type HeaderCollectionReusableView.")
+        }
+        
+        // Configure header
+        header.backgroundColor = .tertiarySystemBackground
+        if let course = collectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.course {
+            if let department = course.department {
+                header.label.text = "\(department.code) \(course.id) \(course.name)"
+            } else {
+                header.label.text = "\(course.id) \(course.name)"
+            }
+        } else {
+            header.label.text = "Unknown Course"
+        }
+
+        return header
+
+    }
+    
+    /// Initialize the snapshot using NSFetchRequest
+    private func updateSnapshot() {
+        
+        // Initialize a new snapshot
+        var snapshot = NSDiffableDataSourceSnapshot<JSONCourse, JSONSection>()
+        
+        // Fetch all course and section
+        snapshot.appendSections(jsonCourses)
+        for jsonCourse in jsonCourses {
+            snapshot.appendItems(jsonCourse.sections, toSection: jsonCourse)
+        }
+        
+        // Apply snapshot
+        collectionViewDiffableDataSource.apply(snapshot)
+        
+    }
+    
+}
+
+// Web Kit Parsing
 
 extension ViewController: WKNavigationDelegate {
     
@@ -64,6 +208,7 @@ extension ViewController: WKNavigationDelegate {
         jsonDepartments = [JSONDepartment]()
         jsonSessions = [JSONSession]()
         jsonCourses = [JSONCourse]()
+        updateSnapshot()
         
         // Parse document
         guard let doc: Document = try? SwiftSoup.parse(html) else {
@@ -243,6 +388,7 @@ extension ViewController: WKNavigationDelegate {
         }
         
         jsonController.writeEncodableToDocuments(jsonDepartments)
+        updateSnapshot()
         
     }
     
