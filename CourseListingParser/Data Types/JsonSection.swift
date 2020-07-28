@@ -15,16 +15,18 @@ class JSONSection: Codable, Hashable {
     var start: Date
     var end: Date
     var days: String
+    var location: String? = nil
     var uuid = UUID()
     
     var course: JSONCourse? = nil
     
-    init(id: String, desc: String? = nil, start: Date, end: Date, days: String, course: JSONCourse? = nil) {
+    init(id: String, desc: String? = nil, start: Date, end: Date, days: String, location: String? = nil, course: JSONCourse? = nil) {
         self.id = id
         self.desc = desc
         self.start = start
         self.end = end
         self.days = days
+        self.location = location
         if let unwrappedCourse = course {
             self.course = unwrappedCourse
             unwrappedCourse.sections.append(self)
@@ -45,6 +47,7 @@ class JSONSection: Codable, Hashable {
         case start
         case end
         case days
+        case location
         case course
     }
     
@@ -55,6 +58,7 @@ class JSONSection: Codable, Hashable {
         start = try container.decode(Date.self, forKey: .start)
         end = try container.decode(Date.self, forKey: .end)
         days = try container.decode(String.self, forKey: .days)
+        location = try? container.decode(String.self, forKey: .location)
         course = try container.decode(JSONCourse.self, forKey: .course)
     }
     
@@ -65,6 +69,7 @@ class JSONSection: Codable, Hashable {
         try container.encode(start, forKey: .start)
         try container.encode(end, forKey: .end)
         try container.encode(days, forKey: .days)
+        try? container.encode(location, forKey: .location)
     }
     
 }

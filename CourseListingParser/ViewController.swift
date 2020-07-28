@@ -77,6 +77,7 @@ extension ViewController: WKNavigationDelegate {
         
 // Scrap department info
         
+        // Find
         guard let deptBars: Elements = try? bodyDivResults.select("table#tabDeptBar0") else {
             print("Tab dept bar element not found in document.")
             return
@@ -93,7 +94,6 @@ extension ViewController: WKNavigationDelegate {
                     let deptFullName = String(splits[0])
                     let deptCode = String(splits[1].split(separator: ")")[0])
                     jsonDepartments.append(JSONDepartment(fullName: deptFullName, code: deptCode, school: unknownSchool))
-                    print(jsonDepartments)
                     
                 } else {
                     print("Failed to decode department info.")
@@ -106,53 +106,135 @@ extension ViewController: WKNavigationDelegate {
         }
         
 // Scrap course info
-        
-        guard let courseDivs: Elements = try? bodyDivResults.select("div.DivDetail") else {
-            print("Body div detail element not found in document.")
+        // Find <div class="Crs****">
+        guard let courseDivs: Elements = try? bodyDivResults.select("div[class^=Crs]") else {
+            print("Body div course div element not found in document.")
             return
         }
         
         for courseDiv in courseDivs {
             
-            // Get basic course info from the id of course div
-            let courseDivId = courseDiv.id()
-            let sessionIndex = courseDivId.index(courseDivId.startIndex, offsetBy: 8)
-            let departmentIndex = courseDivId.index(courseDivId.startIndex, offsetBy: 14)
-            let courseIndex = courseDivId.index(courseDivId.startIndex, offsetBy: 17)
-            let sessionName = String(courseDivId[sessionIndex ..< departmentIndex])
-            let departmentCode = String(courseDivId[departmentIndex ..< courseIndex])
-            let courseCode = String(courseDivId[courseIndex...])
+            var newCourse: JSONCourse!
             
-            // Scrap more course infos from trs
-            if let courseTrs: Elements = try? courseDiv.select("tr") {
+            // Find <td style="width:14%;vertical-align:top;">
+            guard let courseInfoTd = try? courseDiv.select("td[style=\"width:14%;vertical-align:top;\"]").first()?.text() else {
+                print("Course div info td element not found in document.")
+                return
+            }
+            
+            // Assign course info
+            let courseInfoSplit = courseInfoTd.split(separator: " ")
+            if courseInfoSplit.count == 3 {
+                let departmentCode = String(courseInfoSplit[0])
+                let departmentIndex = findDeptIndexByCode(code: departmentCode)
+//                let departmentAbbrivation = String(courseInfoSplit[1])
+                let courseId = String(courseInfoSplit[2])
+                newCourse = JSONCourse(id: courseId, name: "Unknown Course", desc: nil, department: jsonDepartments[departmentIndex], professor: nil, session: nil)
+            } else {
+                print("Invalid course info split count for course div info.")
+            }
+            
+            // Create new course
+            
+            
+            // Find <td style="width:57%;vertical-align:top;">
+            guard let courseNameTd = try? courseDiv.select("td[style=\"width:57%;vertical-align:top;\"]").first()?.text() else {
+                print("Course div course name td element not found in document.")
+                return
+            }
+            
+            // Assign course name
+            newCourse.name = courseNameTd
+
+            // Find <div id="dvDetail*" class="DivDetail" style="margin-left: 6px; width: 100%; display: none;">
+            guard let courseDetailDiv: Element = try? courseDiv.select("div.DivDetail").first() else {
+                print("Course div detail div not found in document.")
+                return
+            }
+//
+//            // Assign session name
+//            let courseDivId = courseDetailDiv.id()
+//            let sessionName = String(courseDivId[courseDivId.index(courseDivId.startIndex, offsetBy: 8) ..< courseDivId.index(courseDivId.startIndex, offsetBy: 14)])
+            
+            // Find <td style="width:91%;">
+            guard let courseDescTd: Element = try? courseDetailDiv.select("td[style=\"width:91%;\"]").first() else {
+                print("Course div detail div course desc td not found in document.")
+                return
+            }
+            newCourse.desc = try? courseDescTd.text()
+            
+            // Find <div id="dvResultTable*" class="ResultTable" style="width:100%;">
+            guard let courseResultTableDiv: Element = try? courseDiv.select("div.ResultTable").first() else {
+                print("Course div result table div not found in document.")
+                return
+            }
+            
+            // Find <div class="ResultRow2*" id="divSelectRow*" dept="*" crs="*" sch="*">
+            guard let sectionResultRow2Divs: Elements = try? courseResultTableDiv.select("div[class^=\"ResultRow2\"]") else {
+                print("Course div result table div result row 2 div not found in document.")
+                return
+            }
+            
+            for sectionResultRow2Div in sectionResultRow2Divs {
                 
-                var description = ""
-                var attributes = ""
+                // Find <a style="text-align:left; color:#0000ff;" class="lnkSubSemester" sem="*">
+                guard let sectionResultLnkSubSemester: Element = try? sectionResultRow2Div.select("a.lnkSubSemester").first() else {
+                    print("Course div result table div result row 2 div lnk sub semester a not found in document.")
+                    return
+                }
+//                guard let semesterName = try? sectionResultLnkSubSemester.attr("sem") else {
+//                    print("Course div result table div result row 2 div lnk sub semester a sem attribute not found in document.")
+//                    return
+//                }
+//                print(semesterName)
                 
-                for courseTr in courseTrs {
-                    
-                    if let courseTrText = try? courseTr.text() {
-                        
-                        let splits = courseTrText.split(separator: ":")
-                        switch splits[0] {
-                        case "Description":
-                            description = String(splits[1])
-                        default:
-                            break
-                        }
-                        
+                // Find <td style="width:250px;">
+                guard let sectionResultSectionStartEndTd = try? sectionResultRow2Div.select("td[style=\"width:250px;\"]").first()?.text() else {
+                    print("Course div result table div result row 2 div section start and end time td not found in document.")
+                    return
+                }
+                let dateSplit = sectionResultSectionStartEndTd.split(separator: " ")
+                let startSplit = dateSplit[0].split(separator: ":")
+                let endSplit = dateSplit[1].split(separator: ":")
+                
+                // Find <td class="ItemRow">
+                var resultStrings = [String]()
+                guard let sectionResultItemRowTds: Elements = try? sectionResultRow2Div.select("td.ItemRow") else {
+                    print("Course div result table div result row 2 div item row td not found in document.")
+                    return
+                }
+                for sectionResultItemRowTd in sectionResultItemRowTds {
+                    if let resultString = try? sectionResultItemRowTd.text() {
+                        resultStrings.append(resultString)
                     } else {
-                        print("Unable to get course tr text from course tr: \(courseTr)")
+                        resultStrings.append("")
+                        print("Fail to cast course div result table div result row 2 div item row td into string")
                     }
-                    
                 }
                 
-                let departmentIndex = findDeptIndexByCode(code: departmentCode)
-                jsonCourses.append(JSONCourse(id: courseCode, name: "Unknown Course", desc: description, department: jsonDepartments[departmentIndex], professor: nil, session: nil))
+                // Find <td style="width:650px;"> (Optional)
+                var desc: String? = nil
+                if let sectionResultDescTd: Element = try? sectionResultRow2Div.select("td[style=\"width:650px;\"]").first() {
+                    desc = try? sectionResultDescTd.text()
+                }
                 
-            } else {
-                print("Descriptions not found in course div: \(courseDiv)")
+                // Assign section
+                let timeSplits = resultStrings[2].split(separator: "-")
+                if (startSplit.count == 2) && (endSplit.count == 2) && (timeSplits.count == 2) {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = " MM/dd/yyyy hh:mma"
+                    let startDateString = String(startSplit[1]) + " " + String(timeSplits[0]) + "M"
+                    let startDate = dateFormatter.date(from: startDateString)!
+                    let endDateString = String(endSplit[1]) + " " + String(timeSplits[1]) + "M"
+                    let endDate = dateFormatter.date(from: endDateString)!
+                    let _ = JSONSection(id: resultStrings[0], desc: desc, start: startDate, end: endDate, days: resultStrings[1], location: resultStrings[3], course: newCourse)
+                } else {
+                    print("Fail to cast course div result table div result row 2 div item row td into json section")
+                }
             }
+            
+            // Assign course
+            jsonCourses.append(newCourse)
             
         }
         
@@ -172,5 +254,18 @@ extension ViewController: WKNavigationDelegate {
         jsonDepartments.append(JSONDepartment(fullName: "Unknown Department", code: code, school: unknownSchool))
         return jsonDepartments.count - 1
     }
+    
+//    /// Find a session in the cache array with a given session name, and create one if not found
+//    /// - Parameter name: A string indicating the session name of the department
+//    /// - Returns: <#description#>
+//    func findSessionIndexByName(name: String) -> Int {
+//        for jsonSession in jsonSessions {
+//            if jsonSession.name == name {
+//                return jsonSessions.firstIndex(of: jsonSession)!
+//            }
+//        }
+//        jsonSessions.append(JSONSession(name: <#T##String#>, start: <#T##Date#>, end: <#T##Date#>))
+//        return jsonDepartments.count - 1
+//    }
     
 }
