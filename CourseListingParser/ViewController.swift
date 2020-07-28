@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     /// Web view outlet
     @IBOutlet weak var webView: WKWebView!
     
+    /// Activity Indicator view outlet
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     /// Collection view outlet
     @IBOutlet weak var collectionView: UICollectionView!
     /// Collection view data source
@@ -158,7 +161,7 @@ extension ViewController {
         }
         
         // Configure header
-        header.backgroundColor = .tertiarySystemBackground
+        header.backgroundColor = .systemGray
         if let course = collectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.course {
             if let department = course.department {
                 header.label.text = "\(department.code) \(course.id) \(course.name)"
@@ -209,6 +212,7 @@ extension ViewController: WKNavigationDelegate {
         jsonSessions = [JSONSession]()
         jsonCourses = [JSONCourse]()
         updateSnapshot()
+        activityIndicatorView.startAnimating()
         
         // Parse document
         guard let doc: Document = try? SwiftSoup.parse(html) else {
@@ -222,7 +226,7 @@ extension ViewController: WKNavigationDelegate {
         
 // Scrap department info
         
-        // Find
+        // Find department bar
         guard let deptBars: Elements = try? bodyDivResults.select("table#tabDeptBar0") else {
             print("Tab dept bar element not found in document.")
             return
@@ -389,6 +393,7 @@ extension ViewController: WKNavigationDelegate {
         
         jsonController.writeEncodableToDocuments(jsonDepartments)
         updateSnapshot()
+        activityIndicatorView.stopAnimating()
         
     }
     

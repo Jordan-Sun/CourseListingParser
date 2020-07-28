@@ -20,10 +20,10 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDH-Qz-5e5">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="400" id="4Sz-4t-i11"/>
+                                            <constraint firstAttribute="height" constant="200" id="4Sz-4t-i11"/>
                                         </constraints>
                                         <wkWebViewConfiguration key="configuration">
                                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -31,7 +31,7 @@
                                         </wkWebViewConfiguration>
                                     </wkWebView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FeI-tb-nYH">
-                                        <rect key="frame" x="185.5" y="408" width="43" height="20"/>
+                                        <rect key="frame" x="185.5" y="208" width="43" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="6YY-d5-WrD"/>
                                         </constraints>
@@ -42,7 +42,7 @@
                                         </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iSJ-tz-9e2">
-                                        <rect key="frame" x="0.0" y="436" width="414" height="382"/>
+                                        <rect key="frame" x="0.0" y="236" width="414" height="582"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TL8-ca-cYc">
                                             <size key="itemSize" width="414" height="128"/>
@@ -166,17 +166,23 @@
                                     <constraint firstItem="iSJ-tz-9e2" firstAttribute="leading" secondItem="EEY-Vn-prD" secondAttribute="leading" id="V0m-ru-uTS"/>
                                 </constraints>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8a6-jN-hgR">
+                                <rect key="frame" x="197" y="561" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EEY-Vn-prD" secondAttribute="bottom" id="Bpw-yx-nng"/>
                             <constraint firstItem="EEY-Vn-prD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Elp-f3-QjQ"/>
                             <constraint firstItem="EEY-Vn-prD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="NbC-2i-sZo"/>
+                            <constraint firstItem="8a6-jN-hgR" firstAttribute="centerY" secondItem="iSJ-tz-9e2" secondAttribute="centerY" id="Sb1-Cg-yCB"/>
                             <constraint firstItem="EEY-Vn-prD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TRj-Zh-mlG"/>
+                            <constraint firstItem="8a6-jN-hgR" firstAttribute="centerX" secondItem="iSJ-tz-9e2" secondAttribute="centerX" id="hdv-cd-JGt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="8a6-jN-hgR" id="kcA-gn-bCD"/>
                         <outlet property="collectionView" destination="iSJ-tz-9e2" id="fgd-VE-1sm"/>
                         <outlet property="webView" destination="RDH-Qz-5e5" id="Mzw-l8-2Ee"/>
                     </connections>
